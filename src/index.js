@@ -1,8 +1,12 @@
-const imgUrl = "https://dog.ceo/api/breeds/image/random/4"
+let breeds = [];
 
-console.log('%c HI', 'color: firebrick')
+document.addEventListener('DOMContentLoaded', function() {
+  fetchImages()
+  fetchBreeds()
+})
 
 function fetchImages() {
+  const imgUrl = "https://dog.ceo/api/breeds/image/random/4"
   fetch(imgUrl)
     .then(resp => resp.json())
     .then(results => {
@@ -15,28 +19,56 @@ function renderImages(url) {
     let newImage = document.createElement('img');
     newImage.src = url;
     container.appendChild(newImage);
-}   
-
-
-const breedUrl = 'https://dog.ceo/api/breeds/list/all'
+}
 
 function fetchBreeds() {
+  const breedUrl = 'https://dog.ceo/api/breeds/list/all'
   fetch(breedUrl)
     .then(resp => resp.json())
     .then(results => {
-      Object.keys(results.message).forEach(key => renderBreeds(key))
+      breeds = Object.keys(results.message)
+      updateBreed(breeds);
+      breedSelect();
   });
-}
+};
 
 function renderBreeds(breed) {
   let ul = document.getElementById("dog-breeds");
   let newLi = document.createElement("li");
   newLi.innerText = breed;
   ul.appendChild(newLi);
+  newLi.addEventListener("click",changeColor)
 };
 
+function changeColor(event) {
+  event.target.style.color = 'red';
+};
 
-document.addEventListener('DOMContentLoaded', function() {
-  fetchImages()
-  fetchBreeds()
-})
+function breedSelect() {
+  let breedDropdown = document.querySelector("#breed-dropdown");
+  breedDropdown.addEventListener('change', event => {
+    filterBreed(event.target.value);
+  });
+}
+
+function filterBreed(letter) {
+  updateBreed(breeds.filter(breed => breed.startsWith(letter)));
+};
+
+function updateBreed(breeds) {
+  let ul = document.getElementById("dog-breeds");
+  removeUl(ul);
+  breeds.forEach(breed => renderBreeds(breed));
+};
+
+function removeUl(element) {
+  let child = element.lastElementChild;
+  while (child) {
+    element.removeChild(child);
+    child = element.lastElementChild;
+  }
+}
+
+
+
+
