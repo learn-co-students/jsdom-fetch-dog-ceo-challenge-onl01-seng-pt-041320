@@ -1,6 +1,7 @@
 const imgUrl = "https://dog.ceo/api/breeds/image/random/4"
 const breedUrl = 'https://dog.ceo/api/breeds/list/all'
 
+//challenge #1 display images
 
 function fetchImages() {
     return fetch(imgUrl)
@@ -17,20 +18,24 @@ function renderImages(imgURLs) {
     }
 }
 
+// challenge #2 get and display breeds
+
 function fetchBreeds() {
     return fetch(breedUrl)
     .then(resp => resp.json())
     .then(json => renderBreeds(json));
 }
 
-function renderBreeds(breeds) {
-    //console.log(breeds)
-    breeds["message"].forEach(printName)
+function renderBreeds(breed) {
+   let breeds =  Object.keys(breed["message"]);
 
-    function printName(item) {
-        console.log(item)
-    }
-}
+   // step through the array breeds and display them in UL
+   breeds.forEach(displayBreed)
+    function displayBreed(item) {
+       document.getElementById("dog-breeds").innerHTML += `<li>${item}</li">`
+    };
+};
+
 
   
   document.addEventListener('DOMContentLoaded', function() {
