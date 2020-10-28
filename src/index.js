@@ -1,6 +1,7 @@
 const imgUrl = "https://dog.ceo/api/breeds/image/random/4"
 const breedUrl = 'https://dog.ceo/api/breeds/list/all'
 
+
 //challenge #1 display images
 
 function fetchImages() {
@@ -10,7 +11,6 @@ function fetchImages() {
   }
 
 function renderImages(imgURLs) {
-    //debugger
     imgURLs["message"].forEach(displayImgs)
 
     function displayImgs(item) {
@@ -18,7 +18,7 @@ function renderImages(imgURLs) {
     }
 }
 
-// challenge #2 get and display breeds
+// challenge #2 & challenge 4 get and display breeds
 
 function fetchBreeds() {
     return fetch(breedUrl)
@@ -27,29 +27,42 @@ function fetchBreeds() {
 }
 
 function renderBreeds(breed) {
-   let breeds =  Object.keys(breed["message"]);
+  //test breeds array
+  let breeds =  Object.keys(breed["message"]);
 
   // creating a filter letter from the pulldown
   let filterVar
   let selector = document.getElementById("breed-dropdown")
   selector.addEventListener("change", function(){
   filterVar = selector.value
-  console.log(filterBreeds(filterVar));
+  console.log(filterVar);
+  filterBreeds(filterVar);
+  displayBreeds();
+  //console.log(filterBreeds(filterVar));
   });
 
   // filter breeds array according to the filter set above
   function filterBreeds(letter) {
-    breeds = breeds.filter(breed => breed.startsWith(letter))
+    if (letter) {
+      tempArray = breeds.filter(breed => breed.startsWith(letter));
+    } else {
+      tempArray = breeds;
+    }
+    return tempArray
   };
 
    // step through the array breeds and display them in UL
-   breeds.forEach(displayBreed)
-    function displayBreed(item) {
-       document.getElementById("dog-breeds").innerHTML += `<li>${item}</li">`
-    };
+   function displayBreeds() {
+    document.getElementById("dog-breeds").innerHTML = "";
+    displayArray = filterBreeds(filterVar)
+    displayArray.forEach(displayBreed)
+     function displayBreed(item) {
+        document.getElementById("dog-breeds").innerHTML += `<li>${item}</li">`
+     };
+   };
+  
+   displayBreeds();
 };
-
-
   
   document.addEventListener('DOMContentLoaded', function() {
     fetchImages()
