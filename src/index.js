@@ -74,6 +74,7 @@ function renderAllImages(data) {
   })
 }
 
+
 function loadImages() {
   // when the page loads
   // make a GET request
@@ -103,5 +104,9 @@ function loadBreeds() {
     })
 }
 
-loadBreeds()
-loadImages()
+
+//On page load we run a fetch found in loadImages
+document.addEventListener('DOMContentLoaded', function() {
+  loadImages()
+  loadBreeds()
+})
