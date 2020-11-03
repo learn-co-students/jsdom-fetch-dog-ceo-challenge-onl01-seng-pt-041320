@@ -2,6 +2,7 @@ console.log('%c HI', 'color: firebrick')
 
 const dogList = document.querySelector("#dog-breeds")
 const dropdown = document.querySelector("#breed-dropdown")
+const imgUrl = "https://dog.ceo/api/breeds/image/random/4"
 
 // Approach 1: Stateful
 // store all the breeds in an array
@@ -81,6 +82,7 @@ function loadImages() {
     .then(response => response.json())
     .then(renderAllImages)
 }
+
 
 
 function renderBreed(breed) {
