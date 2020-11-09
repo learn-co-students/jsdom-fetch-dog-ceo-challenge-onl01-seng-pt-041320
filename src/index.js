@@ -72,7 +72,7 @@ function renderAllImages(data) {
   images.forEach(imageUrl => {
     renderImage(imageUrl)
   })
-}
+} 
 
 function loadImages() {
   // when the page loads
